@@ -4,7 +4,7 @@ Created on September 15, 2024
 
 Author: Rufus Ayeni
 
-Contact: https://github.com/rayeni/python_rithmic_trading_app/discussions
+Contact: https://github.com/rayeni/python_rithmic_power_meter/discussions/
 '''
 
 #################################################################
