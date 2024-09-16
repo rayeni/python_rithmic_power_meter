@@ -269,29 +269,18 @@ class MdStreamApp:
                         buy_volume = 0
                         sell_volume = msg.trade_size
                     
-                    # Create a new dict to hold new trade data
-                    new_data = {'date': dt_marker, 'buy_volume': buy_volume, 'sell_volume': sell_volume}
-
-                    # Create new_trade DataFrame to temporarily hold new trade data.
-                    new_trade_df = pd.DataFrame([new_data])
-
-                    # Set index
-                    new_trade_df = new_trade_df.set_index('date')
-
-                    # Convert RangeIndex to DatetimeIndex
-                    new_trade_df.index = pd.to_datetime(new_trade_df.index)
-
-                    # Set buy_volume and sell_volume to int
-                    new_trade_df['buy_volume'] = new_trade_df['buy_volume'].astype(int)
-                    new_trade_df['sell_volume'] = new_trade_df['sell_volume'].astype(int)
-
                     with self.lock:
-                        # Concatenate temp_df to tick_df
-                        self.trades_df = pd.concat([self.trades_df, new_trade_df])
+                        # Using loc to directly add to DataFrame
+                        dt_marker = pd.to_datetime(dt_marker)
+                        self.trades_df.loc[dt_marker, 'buy_volume'] = int(buy_volume)
+                        self.trades_df.loc[dt_marker, 'sell_volume'] = int(sell_volume)
 
                         # Get trades over the last 60 seconds
                         cutoff_time = dt.now() - timedelta(seconds=self.window_seconds)
                         self.trades_60_df = self.trades_df[self.trades_df.index > cutoff_time]
+
+                    # Export trade data to csv file
+                    self.trades_df.to_csv('./trades.csv')
 
     async def rithmic_login(self, ws, infra_type):
         '''

@@ -104,20 +104,30 @@ try:
         
         # Lock the DataFrame for thread-safe operation 
         with md_stream_app.lock:
-            # Get Power Meter Update
-            if md_stream_app.trades_60_df is not None:
-                print('Trades Power Meter Cumulative:')
-                print(f'Trades that have hit the bid:    {md_stream_app.trades_df["sell_volume"].sum()}')
-                print(f'Trades that have lifted the ask: {md_stream_app.trades_df["buy_volume"].sum()}')
+
+            # Get Power Meter update by extracting the sum from the Dataframes
+            if md_stream_app.trades_df is not None:
+                cumulative_sell = md_stream_app.trades_df["sell_volume"].sum()
+                cumulative_buy = md_stream_app.trades_df["buy_volume"].sum()
             else:
-                print('Trades Power Meter Cumulative: No trades data available.')
-            print('')
+                cumulative_sell = 0
+                cumulative_buy = 0
+
             if md_stream_app.trades_60_df is not None:
-                print('Trades Power Meter Last 60 Seconds:')
-                print(f'Trades that have hit the bid:    {md_stream_app.trades_60_df["sell_volume"].sum()}')
-                print(f'Trades that have lifted the ask: {md_stream_app.trades_60_df["buy_volume"].sum()}\n\n\n\n\n')
+                lastest_sell = md_stream_app.trades_60_df["sell_volume"].sum()
+                lastest_buy = md_stream_app.trades_60_df["buy_volume"].sum()
             else:
-                print('Trades Power Meter Last 60 Seconds: No trades data available.\n\n\n\n\n')
+                lastest_sell = 0
+                lastest_buy = 0
+
+        # Print the sums.
+        print('Trades Power Meter Cumulative:')
+        print(f'Trades that have hit the bid:    {int(cumulative_sell)}')
+        print(f'Trades that have lifted the ask: {int(cumulative_buy)}')
+        print('')
+        print('Trades Power Meter Last 60 Seconds:')
+        print(f'Trades that have hit the bid:    {int(lastest_sell)}')
+        print(f'Trades that have lifted the ask: {int(lastest_buy)}\n\n\n\n\n')
 
         sleep(1)
             
