@@ -22,7 +22,7 @@ from md_stream import MdStreamApp
 #################################################################
 
 # The url of the Rithmic server
-uri              = 'wss://rprotocol.rithmic.com:443'
+uri              = 'CHANGE_ME'
 
 # The name of the Rithmic System. 
 # For live trading, change to Rithmic 01.
