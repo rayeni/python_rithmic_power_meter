@@ -23,7 +23,7 @@ In the library imports section of the `md_stream.py` file, you will see referenc
 
 #### SSL Cert File
 
-The application files references the `rithmic_ssl_cert_auth_params` file.  You should have received that file from Rithmic.  Drop your copy in the root directory.
+The application file reference the `rithmic_ssl_cert_auth_params` file.  You should have received that file from Rithmic.  Drop your copy in the root directory.
 
 #### URI
 
